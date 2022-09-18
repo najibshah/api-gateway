@@ -1,8 +1,8 @@
 const axios = require("axios");
 const express = require("express");
+const { default: accessEnv } = require("../src/helpers/accessEnv");
 const router = express.Router();
-
-const formsURI = process.env.FORMS_SERVICE_URI;
+const formsURI = accessEnv("FORMS_SERVICE_URI");
 
 // @route   GET /form/test
 // @desc    Tests forms get route
@@ -42,7 +42,7 @@ router.post("/new-form", (req, res) => {
     })
     .catch((response) => {
       console.log(response.response.data);
-      res.json(response.response.data);
+      return res.status(400).json(response.response.data);
     });
 });
 

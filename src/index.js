@@ -5,9 +5,10 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const formsService = require("../routes/formsService");
 const authService = require("../routes/authService");
+const { default: accessEnv } = require("./helpers/accessEnv");
 
 const app = express();
-const port = process.env.PORT || 7650;
+const port = accessEnv("PORT") || 7650;
 
 // Body Parser
 app.use(bodyParser.urlencoded({ extended: false }));

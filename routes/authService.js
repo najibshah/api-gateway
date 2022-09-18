@@ -2,6 +2,7 @@ const axios = require("axios");
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
+const accessEnv = require("../src/helpers/accessEnv");
 
 const authURI = process.env.AUTH_SERVICE_URI;
 
@@ -32,9 +33,30 @@ router.post("/test", (req, res) => {
 // @desc    Get all users
 // @access  Public
 router.get("/users", (req, res) => {
-  axios.get(`${authURI}/users`).then((response) => {
-    res.json(response.data);
-  });
+  axios
+    .get(`${authURI}/users`)
+    .then((response) => {
+      res.json(response.data);
+    })
+    .catch((response) => {
+      console.log("register api gateway error " + response);
+      return res.status(400).json(response.response.data);
+    });
+});
+
+// @route   GET /auth/users
+// @desc    Get  user by email
+// @access  Public
+router.get("/:email", (req, res) => {
+  axios
+    .get(`${authURI}/${req.params.email}`)
+    .then((response) => {
+      res.json(response.data);
+    })
+    .catch((response) => {
+      console.log("register api gateway error " + response);
+      return res.status(400).json(response.response.data);
+    });
 });
 
 // @route   Post /auth/register
@@ -43,6 +65,21 @@ router.get("/users", (req, res) => {
 router.post("/register", (req, res) => {
   axios
     .post(`${authURI}/register`, { data: req.body })
+    .then((response) => {
+      res.json(response.data);
+    })
+    .catch((response) => {
+      console.log("register api gateway error " + response);
+      return res.status(400).json(response.response.data);
+    });
+});
+
+// @route   Post /auth/editUser
+// @desc    edit user
+// @access  Public
+router.post("/editUser", (req, res) => {
+  axios
+    .post(`${authURI}/editUser`, req.body)
     .then((response) => {
       res.json(response.data);
     })
