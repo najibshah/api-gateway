@@ -1,48 +1,25 @@
-const axios = require("axios");
 const express = require("express");
-const { default: accessEnv } = require("../src/helpers/accessEnv");
 const router = express.Router();
-const formsURI = accessEnv("FORMS_SERVICE_URI");
+const { getAllForms, addNewForm, testGet, testPost } = require("../functions");
 
 // @route   GET /form/test
 // @desc    Tests forms get route
 // @access  Public
-router.get("/test", (req, res) => {
-  axios.get(`${formsURI}/test`).then((response) => {
-    res.json(response.data);
-  });
-});
+router.get("/test", (req, res) => testGet(req, res));
 
 // @route   POST /form/test
 // @desc    Tests forms post route
 // @access  Public
-router.post("/test", (req, res) => {
-  axios.post(`${formsURI}/test`).then((response) => {
-    res.json(response.data);
-  });
-});
+router.post("/test", (req, res) => testPost(req, res));
 
 // @route   GET /form/forms
 // @desc    Get all forms
 // @access  Public
-router.get("/forms", (req, res) => {
-  axios.get(`${formsURI}/forms`).then((response) => {
-    res.json(response.data);
-  });
-});
+router.get("/forms", (req, res) => getAllForms(req, res));
 
 // @route   POST /form/new-form
 // @desc    Adds new form to database
 // @access  Public
-router.post("/new-form", (req, res) => {
-  axios
-    .post(`${formsURI}/new-form`, { data: req.body })
-    .then((response) => {
-      res.json(response.data);
-    })
-    .catch((response) => {
-      return res.status(400).json(response.response.data);
-    });
-});
+router.post("/new-form", (req, res) => addNewForm(req, res));
 
 module.exports = router;
