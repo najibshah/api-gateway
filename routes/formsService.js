@@ -41,7 +41,6 @@ router.post("/new-form", (req, res) => {
       res.json(response.data);
     })
     .catch((response) => {
-      console.log(response.response.data);
       return res.status(400).json(response.response.data);
     });
 });

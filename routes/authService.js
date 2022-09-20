@@ -1,7 +1,6 @@
 const axios = require("axios");
 const express = require("express");
 const router = express.Router();
-const passport = require("passport");
 const accessEnv = require("../src/helpers/accessEnv");
 
 const authURI = process.env.AUTH_SERVICE_URI;
